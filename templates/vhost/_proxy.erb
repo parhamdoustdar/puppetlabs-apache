@@ -10,10 +10,10 @@
   ProxyErrorOverride On
 <%- end -%>
 <%- [@proxy_pass].flatten.compact.each do |proxy| -%>
-  ProxyPass <%= proxy['path'] %> <%= proxy['url'] -%>
   <%- if proxy['params'] -%>
-    <%- proxy['params'].each_pair do |key, value| -%> <%= key %>=<%= value -%>
-    <%- end -%>
+    ProxyPass <%= proxy['path'] %> <%= proxy['url'] -%> <%- proxy['params'].each_pair do |key, value| -%> <%= key %>=<%= value -%> <%- end -%>
+  <%- else -%>
+    ProxyPass <%= proxy['path'] %> <%= proxy['url'] -%>
   <%- end -%>
   <%- if proxy['keywords'] %> <%= proxy['keywords'].join(' ') -%>
   <%- end %>
@@ -33,10 +33,10 @@
   </Location>
 <% end -%>
 <% [@proxy_pass_match].flatten.compact.each do |proxy| %>
-  ProxyPassMatch <%= proxy['path'] %> <%= proxy['url'] %>
   <%- if proxy['params'] -%>
-    <%- proxy['params'].each_pair do |key, value| -%> <%= key %>=<%= value -%>
-    <%- end -%>
+    ProxyPassMatch <%= proxy['path'] %> <%= proxy['url'] %> <%- proxy['params'].each_pair do |key, value| -%> <%= key %>=<%= value -%> <%- end -%>
+  <%- else -%>
+    ProxyPassMatch <%= proxy['path'] %> <%= proxy['url'] %>
   <%- end -%>
   <%- if proxy['keywords'] %> <%= proxy['keywords'].join(' ') -%>
   <%- end %>
